@@ -3,6 +3,7 @@ package com.rekahdo.facechat.enums;
 @SuppressWarnings("unused")
 public enum Error {
 
+	UNKNOWN_VIOLATION,
 	USER_ID_NOT_FOUND_VIOLATION,
 	USERNAME_NOT_FOUND_VIOLATION,
 	USERNAME_EXIST_VIOLATION,

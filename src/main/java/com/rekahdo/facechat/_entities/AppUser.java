@@ -64,6 +64,10 @@ public class AppUser {
 		this.username = username;
 	}
 
+	public AppUser(Long id) {
+		this.id = id;
+	}
+
 	// GETTERS AND SETTERS
 	public Long getId() {
 		return id;
@@ -191,4 +195,12 @@ public class AppUser {
 				}).toList();
 	}
 
+	// TO STRING
+	@Override
+	public String toString() {
+		return "AppUser{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				'}';
+	}
 }

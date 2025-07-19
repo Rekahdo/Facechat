@@ -23,6 +23,8 @@ import java.util.List;
 @JsonFilter("appUserDtoFilter")
 public class AppUserDto extends EntityDto<AppUserDto> {
 
+	private Long id;
+
 	@Username
 	private String username;
 

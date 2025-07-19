@@ -45,7 +45,7 @@ public class AppUserService {
 	private AppUserRepository repo;
 
 	@Autowired
-	private AppUserMapper userMapper;
+	private AppUserMapper mapper;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -82,7 +82,7 @@ public class AppUserService {
 		}
 
 		dto.setCreatedAt(Instant.now()); dto.setUpdatedAt(Instant.now());
-		dto = userMapper.toDto(repo.save(userMapper.toEntity(dto)));
+		dto = mapper.toDto(repo.save(mapper.toEntity(dto)));
 		MappingJacksonValue mappingJacksonValue = AppUserMJV.publicFilter(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(mappingJacksonValue);
 	}
@@ -99,7 +99,7 @@ public class AppUserService {
 		Page<AppUser> users = repo.findAll(pageable);
 		if (users.isEmpty()) throw new EmptyListException();
 
-		Page<AppUserDto> userDtos = users.map(userMapper::toDto);
+		Page<AppUserDto> userDtos = users.map(mapper::toDto);
 		PagedModel<AppUserDto> pagedModel = PagedModel.of(userDtos.getContent(),
 				new PagedModel.PageMetadata(userDtos.getSize(), userDtos.getNumber(),
 						userDtos.getTotalElements(), userDtos.getTotalPages()
@@ -123,7 +123,7 @@ public class AppUserService {
 
 	public ResponseEntity<?> getUser(Long id) {
 		AppUser user = repo.findById(id).orElseThrow(() -> new UserIdNotFoundException(id));
-		AppUserDto dto = userMapper.toDto(user);
+		AppUserDto dto = mapper.toDto(user);
 
 		if(AuthUser.IS_AN_ADMIN() || AuthUser.IS_A_MODERATOR())
 			dto.add(linkTo(methodOn(AppUserController.class).getUsers(new PageRequestDto())).withRel("users"));
@@ -144,8 +144,8 @@ public class AppUserService {
 			authorityRepository.deleteByAppUserId(id);
 		}
 
-		userMapper.updateEntity(dto, user);
-		dto = userMapper.toDto(repo.save(user));
+		mapper.updateEntity(dto, user);
+		dto = mapper.toDto(repo.save(user));
 		return ResponseEntity.ok(AppUserMJV.privateFilter(dto,true));
 	}
 
@@ -163,8 +163,8 @@ public class AppUserService {
 		}
 
 		dto.setUpdatedAt(Instant.now());
-		userMapper.updateEntity(dto, user);
-		dto = userMapper.toDto(repo.save(user));
+		mapper.updateEntity(dto, user);
+		dto = mapper.toDto(repo.save(user));
 		return ResponseEntity.ok(AppUserMJV.privateFilter(dto));
 	}
 

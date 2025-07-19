@@ -1,5 +1,6 @@
 package com.rekahdo.facechat._entities;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class Friendship {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Enumerated(EnumType.STRING)
 	private FriendshipStatus status;
 
 	@ManyToOne
@@ -30,6 +32,8 @@ public class Friendship {
 	@JoinColumn(name = "receiver_id")
 	@JsonIgnore
 	private AppUser receiver;
+
+	private Instant createdAt;
 
 	@OneToMany(mappedBy = "friendship", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Chat> chats = new ArrayList<>();

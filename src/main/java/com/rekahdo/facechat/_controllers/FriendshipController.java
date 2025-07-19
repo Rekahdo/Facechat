@@ -24,6 +24,12 @@ public class FriendshipController {
 	@Autowired
 	private FriendshipService service;
 
+	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId)")
+	@PostMapping(path = "", consumes = "application/json")
+	public ResponseEntity<?> addFriendship(@PathVariable Long userId, @Valid @RequestBody FriendshipDto dto) {
+		return service.addFriendship(userId, dto);
+	}
+
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('MODERATOR')")
 	@GetMapping(path = "")
 	public ResponseEntity<?> getFriendships(@PathVariable Long userId,
@@ -35,12 +41,6 @@ public class FriendshipController {
 	@GetMapping(path = "/{friendId}")
 	public ResponseEntity<?> getFriendship(@PathVariable Long userId, @PathVariable Long friendId) {
 		return service.getFriendship(userId, friendId);
-	}
-
-	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId)")
-	@PostMapping(path = "{friendId}", consumes = "application/json")
-	public ResponseEntity<?> addFriendship(@PathVariable Long userId, @PathVariable Long friendId) {
-		return service.addFriendship(userId, friendId);
 	}
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId)")

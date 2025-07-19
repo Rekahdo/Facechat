@@ -6,6 +6,7 @@ import com.rekahdo.facechat.exceptions.model.ErrorResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -94,6 +95,12 @@ public class Api_ExceptionHandler {
     public ResponseEntity<?> handleUnsupportedOperationException(UnsupportedOperationException ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(ORPHANED_COLLECTION_REFERENCE_VIOLATION, ex, request);
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errorResponse.fetchMJV());
+    }
+
+//    @ExceptionHandler(HttpMessageConversionException.class)
+    public ResponseEntity<?> handleHttpMessageConversionException(HttpMessageConversionException ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(UNKNOWN_VIOLATION, ex, request);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse.fetchMJV());
     }
 
 }
