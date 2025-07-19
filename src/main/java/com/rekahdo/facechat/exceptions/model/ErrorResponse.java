@@ -25,6 +25,9 @@ public class ErrorResponse {
     @JsonView(SingleErrorView.class)
     private String exception;
 
+    @JsonView(ErrorResponse.SingleErrorView.class)
+    private String trace;
+
     @JsonView(SingleErrorView.class)
     private Error error;
 
@@ -51,6 +54,7 @@ public class ErrorResponse {
 
     public ErrorResponse(Error statusValue, Exception ex, WebRequest request) {
         this.exception = String.format("%s.class", ex.getClass().getSimpleName());
+        this.trace = fetchTrace(ex);
         this.status = null;
         this.isMultiErrors = (ex instanceof BindException);
         this.error = statusValue;
@@ -66,6 +70,14 @@ public class ErrorResponse {
         mappingJacksonValue.setSerializationView((isMultiErrors ?
                 MultiErrorView.class : SingleErrorView.class));
         return mappingJacksonValue;
+    }
+
+    private String fetchTrace(Exception ex){
+        StackTraceElement[] stackTrace = ex.getStackTrace();
+        return stackTrace.length > 0
+                ? String.format("%s.%s:line-%d", stackTrace[0].getClassName(),
+                    stackTrace[0].getMethodName(), stackTrace[0].getLineNumber())
+                : "Unknown";
     }
 
 }

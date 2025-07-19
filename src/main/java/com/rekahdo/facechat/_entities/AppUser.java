@@ -1,5 +1,6 @@
 package com.rekahdo.facechat._entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rekahdo.facechat.enums.AuthorityRole;
 import com.rekahdo.facechat.utilities.StringFormat;
 import jakarta.persistence.*;
@@ -20,8 +21,7 @@ import java.util.List;
 @Table(name = "users")
 public class AppUser {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(unique = true)
@@ -37,6 +37,18 @@ public class AppUser {
 
 	@OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Authority> authorities = new ArrayList<Authority>();
+
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Friendship> sentFriendships = new ArrayList<>();
+
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Friendship> receivedFriendships = new ArrayList<>();
+
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Chat> sentChats = new ArrayList<Chat>();
+
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Chat> receivedChats = new ArrayList<Chat>();
 
 	// HELPER CONSTRUCTORS
 	public AppUser(Long id, String username, String password, String email, Instant createdAt) {
@@ -107,6 +119,38 @@ public class AppUser {
 
 	public void setAuthorities(List<Authority> authorities) {
 		this.authorities = authorities;
+	}
+
+	public List<Friendship> getSentFriendships() {
+		return sentFriendships;
+	}
+
+	public void setSentFriendships(List<Friendship> sentFriendships) {
+		this.sentFriendships = sentFriendships;
+	}
+
+	public List<Friendship> getReceivedFriendships() {
+		return receivedFriendships;
+	}
+
+	public void setReceivedFriendships(List<Friendship> receivedFriendships) {
+		this.receivedFriendships = receivedFriendships;
+	}
+
+	public List<Chat> getSentChats() {
+		return sentChats;
+	}
+
+	public void setSentChats(List<Chat> sentChats) {
+		this.sentChats = sentChats;
+	}
+
+	public List<Chat> getReceivedChats() {
+		return receivedChats;
+	}
+
+	public void setReceivedChats(List<Chat> receivedChats) {
+		this.receivedChats = receivedChats;
 	}
 
 	// HELPER METHODS

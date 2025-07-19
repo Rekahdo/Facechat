@@ -42,8 +42,6 @@ public class AppUserPopulator {
             appUserService.createUser(john);
             appUserService.createUser(mary);
             appUserService.createUser(paul);
-            appUserService.createUser(new AppUserDto("david", "ppppPP@1", null)
-                    .setRoles(AuthorityRole.EDITOR.getValue()).setAdminKey(adminKey));
         }
     }
 
