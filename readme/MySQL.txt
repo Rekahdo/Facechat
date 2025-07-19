@@ -1,0 +1,10 @@
+DOCKER COMMAND FOR MYSQL CONTAINER
+docker run --name MySQL_FaceChat --hostname 127.0.0.1 --publish 3303:3306 --env MYSQL_ROOT_PASSWORD=facepwforchat --env MYSQL_DATABASE=FaceChatDB --env MYSQL_USER=facechat --env MYSQL_PASSWORD=facechatPass --env MYSQL_GRANT="ALL PRIVILEGES" --detach mysql:8-oracle
+
+MYSQL WORKBENCH CONNECTION WITH MYSQL DOCKER CONTAINER
+- Connection Name: Docker_MySQL_FaceChat
+- hostname: 127.0.0.1
+- port: 3303:3306
+- username: facechat
+- password: facechatPass
+- Default Schema (DB Name): FaceChatDB
