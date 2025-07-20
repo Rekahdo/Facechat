@@ -15,13 +15,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
 	
-	@Query("SELECT f FROM Friendship f WHERE (sender.id = :userId OR receiver.id = :userId) AND  f.status IN :statuses")
+	@Query("SELECT f FROM Friendship f WHERE (sender.id = :userId OR receiver.id = :userId) AND f.status IN :statuses")
 	List<Friendship> findByUserIdAndStatusIn(@Param("userId") Long userId, @Param("statuses") List<FriendshipStatus> statuses);
 
-	Optional<Friendship> findBySenderIdAndReceiverIdOrReceiverIdAndSenderId(Long senderId, Long receiverId, Long senderId2, Long receiverId2);
+	@Query("SELECT f FROM Friendship f WHERE (sender.id = :userId OR sender.id = :friendId) AND (receiver.id = :userId OR receiver.id = :friendId)")
+	Optional<Friendship> findByUserIdAndFriendId(@Param("userId") Long userId, @Param("friendId") Long friendId);
 
 	@Transactional @Modifying
-	@Query("DELETE from Friendship WHERE (sender.id = :userId AND receiver.id = :friendId) OR (sender.id = :friendId AND receiver.id = :userId)")
+	@Query("DELETE from Friendship WHERE (sender.id = :userId OR sender.id = :friendId) AND (receiver.id = :userId OR receiver.id = :friendId)")
 	void deleteByUserIdAndFriendId(@Param("userId") Long userId, @Param("friendId") Long friendId);
 
 }

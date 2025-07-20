@@ -57,7 +57,7 @@ public class FriendshipService {
 			throw new SameIdException(userId, dto.getFriendId());
 
 		Long friendId = dto.getFriendId();
-		Optional<Friendship> optional = repo.findBySenderIdAndReceiverIdOrReceiverIdAndSenderId(userId, friendId, userId, friendId);
+		Optional<Friendship> optional = repo.findByUserIdAndFriendId(userId, friendId);
 		if(optional.isPresent()) throw new FriendshipExistException(friendId);
 
 		dto.setId(null);
@@ -73,7 +73,7 @@ public class FriendshipService {
 
 	public ResponseEntity<?> editFriendship(Long userId, FriendshipDto dto) {
 		Long friendId = dto.getFriendId();
-		Optional<Friendship> optional = repo.findBySenderIdAndReceiverIdOrReceiverIdAndSenderId(userId, friendId, userId, friendId);
+		Optional<Friendship> optional = repo.findByUserIdAndFriendId(userId, friendId);
 		if(optional.isEmpty()) throw new FriendshipNotFoundException(userId, friendId);
 
 		Friendship friendship = optional.get();
@@ -159,7 +159,7 @@ public class FriendshipService {
 	}
 
 	public ResponseEntity<?> getFriendship(Long userId, Long friendId) {
-		Optional<Friendship> optional = repo.findBySenderIdAndReceiverIdOrReceiverIdAndSenderId(userId, friendId, userId, friendId);
+		Optional<Friendship> optional = repo.findByUserIdAndFriendId(userId, friendId);
 		if(optional.isEmpty()) throw new FriendshipNotFoundException(userId, friendId);
 
 		FriendshipDto dto = mapper.toDto(optional.get());
