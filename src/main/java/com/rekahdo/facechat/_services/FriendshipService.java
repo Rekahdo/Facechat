@@ -44,7 +44,7 @@ public class FriendshipService {
 	private AppUserRepository appUserRepository;
 
 	@Autowired
-	private PageRequestUriBuilder pageLinkBuilder;
+	private PageRequestUriBuilder<FriendshipDto> pageLinkBuilder;
 
 	@Autowired
 	private AppUserMapper userMapper;
@@ -130,30 +130,15 @@ public class FriendshipService {
 		PropertyComparator.sort(pageSlice, new MutableSortDefinition(dto.getSortByField(), true, ascending));
 
 		// PageImpl
-		Page<Friendship> friendshipPage = new PageImpl<>(pageSlice, new PageRequestDto().getPageable(dto), friendships.size());
-		Page<FriendshipDto> friendshipsDtos = friendshipPage.map(friendship -> {
+		Page<Friendship> page = new PageImpl<>(pageSlice, new PageRequestDto().getPageable(dto), friendships.size());
+		Page<FriendshipDto> pageDto = page.map(friendship -> {
 			FriendshipDto dto2 = mapper.toDto(friendship);
 			dto2.setFriend(getFriendDto(friendship, userId));
 			return dto2;
 		});
 
-		PagedModel<FriendshipDto> pagedModel = PagedModel.of(friendshipsDtos.getContent(),
-				new PagedModel.PageMetadata(friendshipsDtos.getSize(), friendshipsDtos.getNumber(),
-						friendshipsDtos.getTotalElements(), friendshipsDtos.getTotalPages()
-				)
-		);
-
-		if(friendshipsDtos.hasNext())
-			pagedModel.add(pageLinkBuilder.buildNextLink(methodOn(FriendshipController.class).getFriendships(userId, dto, status), dto));
-
-		if(friendshipsDtos.hasPrevious())
-			pagedModel.add(pageLinkBuilder.buildPrevLink(methodOn(FriendshipController.class).getFriendships(userId, dto, status), dto));
-
-		if(friendshipsDtos.getNumber() != 0)
-			pagedModel.add(pageLinkBuilder.buildFirstLink(methodOn(FriendshipController.class).getFriendships(userId, dto, status), dto));
-
-		if(friendshipsDtos.getNumber() != friendshipsDtos.getTotalPages()-1)
-			pagedModel.add(pageLinkBuilder.buildLastLink(methodOn(FriendshipController.class).getFriendships(userId, dto, status), dto, pagedModel));
+		PagedModel<FriendshipDto> pagedModel =
+				pageLinkBuilder.initialize(dto, pageDto, methodOn(FriendshipController.class).getFriendships(userId, dto, status)).build();
 
 		return ResponseEntity.ok(FriendshipMJV.friendshipFilter(pagedModel));
 	}

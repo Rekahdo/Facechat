@@ -61,7 +61,7 @@ public class AppUserService {
 	private JwtSymmetricService jwtService;
 
 	@Autowired
-	private PageRequestUriBuilder pageLinkBuilder;
+	private PageRequestUriBuilder<AppUserDto> pageLinkBuilder;
 
 	@Autowired
 	private DBAdmin dbAdmin;
@@ -144,24 +144,7 @@ public class AppUserService {
 		if (users.isEmpty()) throw new EmptyListException();
 
 		Page<AppUserDto> userDtos = users.map(mapper::toDto);
-		PagedModel<AppUserDto> pagedModel = PagedModel.of(userDtos.getContent(),
-				new PagedModel.PageMetadata(userDtos.getSize(), userDtos.getNumber(),
-						userDtos.getTotalElements(), userDtos.getTotalPages()
-				)
-		);
-
-		if(userDtos.hasNext())
-			pagedModel.add(pageLinkBuilder.buildNextLink(methodOn(AppUserController.class).getUsers(dto), dto));
-
-		if(userDtos.hasPrevious())
-			pagedModel.add(pageLinkBuilder.buildPrevLink(methodOn(AppUserController.class).getUsers(dto), dto));
-
-		if(userDtos.getNumber() != 0)
-			pagedModel.add(pageLinkBuilder.buildFirstLink(methodOn(AppUserController.class).getUsers(dto), dto));
-
-		if(userDtos.getNumber() != userDtos.getTotalPages()-1)
-			pagedModel.add(pageLinkBuilder.buildLastLink(methodOn(AppUserController.class).getUsers(dto), dto, pagedModel));
-
+		PagedModel<AppUserDto> pagedModel = pageLinkBuilder.initialize(dto, userDtos, methodOn(AppUserController.class).getUsers(dto)).build();
 		return ResponseEntity.ok(AppUserMJV.publicFilter(pagedModel));
 	}
 
