@@ -39,8 +39,11 @@ public class AppUserPopulator {
                     .setRoles(AuthorityRole.EDITOR.getValue()).setAdminKey(adminKey);
             service.createUser(mary);
 
-            AppUserDto paul = new AppUserDto("paul", "ppppPP@1", "paul@gmail.com");
-            service.createUser(paul);
+            service.createUser(new AppUserDto("paul", "ppppPP@1", "paul@gmail.com"));
+            service.createUser(new AppUserDto("joe", "ppppPP@1", "joe@gmail.com"));
+            service.createUser(new AppUserDto("jack", "ppppPP@1", "jack@gmail.com"));
+            service.createUser(new AppUserDto("james", "ppppPP@1", "james@gmail.com"));
+            service.createUser(new AppUserDto("josh", "ppppPP@1", "josh@gmail.com"));
         }
     }
 

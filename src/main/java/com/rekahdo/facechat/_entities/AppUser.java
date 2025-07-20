@@ -10,10 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -139,6 +136,13 @@ public class AppUser {
 
 	public void setReceivedFriendships(List<Friendship> receivedFriendships) {
 		this.receivedFriendships = receivedFriendships;
+	}
+
+	public List<Friendship> fetchFriends(){
+		List<Friendship> friendshipList = new ArrayList<>();
+		friendshipList.addAll(sentFriendships == null || sentFriendships.isEmpty() ? Collections.emptyList() : getSentFriendships());
+		friendshipList.addAll(receivedFriendships == null || receivedFriendships.isEmpty() ? Collections.emptyList() : getReceivedFriendships());
+		return friendshipList;
 	}
 
 	public List<Chat> getSentChats() {

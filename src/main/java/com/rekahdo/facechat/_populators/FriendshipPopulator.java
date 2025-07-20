@@ -31,17 +31,23 @@ public class FriendshipPopulator {
     @PostConstruct
     private void addFriendships(){
         if(recordInserted){
-            FriendshipDto rekJohn = new FriendshipDto(2L);
-            service.addFriendship(1L, rekJohn);
+            // rekahdo and john
+            service.addFriendship(1L, new FriendshipDto(2L));
 
-//            FriendshipDto rekPaul = new FriendshipDto(4L);
-//            service.addFriendship(1L, rekPaul);
-//
-//            FriendshipDto maryRek = new FriendshipDto(1L);
-//            service.addFriendship(3L, maryRek);
-//
-//            FriendshipDto maryJohn = new FriendshipDto(2L);
-//            service.addFriendship(3L, maryJohn);
+            // rekahdo and mary
+            service.addFriendship(3L, new FriendshipDto(1L));
+
+            // rekahdo and paul
+            service.addFriendship(1L, new FriendshipDto(4L));
+
+            // rekahdo and jack
+            service.addFriendship(6L, new FriendshipDto(1L));
+
+            // rekahdo and josh
+            service.addFriendship(8L, new FriendshipDto(1L));
+
+            // mary and john
+            service.addFriendship(3L, new FriendshipDto(2L));
         }
     }
 

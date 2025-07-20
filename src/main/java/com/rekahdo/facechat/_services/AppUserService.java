@@ -95,8 +95,8 @@ public class AppUserService {
 		return ResponseEntity.ok(jwtService.createToken(authentication));
 	}
 
-	public ResponseEntity<?> getUsers(PageRequestDto dto, Pageable pageable) {
-		Page<AppUser> users = repo.findAll(pageable);
+	public ResponseEntity<?> getUsers(PageRequestDto dto) {
+		Page<AppUser> users = repo.findAll(dto.getPageable(dto));
 		if (users.isEmpty()) throw new EmptyListException();
 
 		Page<AppUserDto> userDtos = users.map(mapper::toDto);

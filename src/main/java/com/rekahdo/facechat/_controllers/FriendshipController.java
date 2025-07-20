@@ -1,19 +1,13 @@
 package com.rekahdo.facechat._controllers;
 
 import com.rekahdo.facechat._dtos.FriendshipDto;
+import com.rekahdo.facechat._dtos.PageRequestDto;
 import com.rekahdo.facechat._services.FriendshipService;
+import com.rekahdo.facechat.enums.FriendshipStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
@@ -32,9 +26,9 @@ public class FriendshipController {
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('MODERATOR')")
 	@GetMapping(path = "")
-	public ResponseEntity<?> getFriendships(@PathVariable Long userId,
+	public ResponseEntity<?> getFriendships(@PathVariable Long userId, @ModelAttribute PageRequestDto dto,
 			@RequestParam(defaultValue = "ACCEPTED", required = false) String status) {
-		return service.getFriendships(userId, status);
+		return service.getFriendships(userId, dto, status);
 	}
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('MODERATOR')")

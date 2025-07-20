@@ -13,9 +13,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
 	
-	@Query("SELECT f FROM Friendship f WHERE (sender.id = :uid OR receiver.id = :uid) AND  f.status IN :statuses")
-	List<Friendship> findAllFriendships(@Param("uid") Long uid, @Param("statuses") List<FriendshipStatus> statuses);
+	@Query("SELECT f FROM Friendship f WHERE (sender.id = :userId OR receiver.id = :userId) AND  f.status IN :statuses")
+	List<Friendship> findByUserIdAndStatusIn(@Param("userId") Long userId, @Param("statuses") List<FriendshipStatus> statuses);
 
-//	boolean existByReceiverId(Long receiverId);
+	Optional<Friendship> findBySenderIdAndReceiverIdOrReceiverIdAndSenderId(Long senderId, Long receiverId, Long receiverId2, Long senderId2);
 
 }

@@ -31,7 +31,7 @@ public class AppUserController {
 	@PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
 	@GetMapping("")
 	public ResponseEntity<?> getUsers(@ModelAttribute PageRequestDto dto) {
-		return service.getUsers(dto, dto.getPageable(dto));
+		return service.getUsers(dto);
 	}
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('MODERATOR')")

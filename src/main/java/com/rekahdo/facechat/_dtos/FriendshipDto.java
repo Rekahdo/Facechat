@@ -1,10 +1,8 @@
 package com.rekahdo.facechat._dtos;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.rekahdo.facechat._entities.AppUser;
 import com.rekahdo.facechat.enums.FriendshipStatus;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
@@ -27,14 +25,14 @@ public class FriendshipDto extends EntityDto<FriendshipDto> {
 	@Enumerated(EnumType.STRING)
 	private FriendshipStatus status;
 
-	private AppUserDto sender;
+	private boolean isFriendRequestSender;
 
 	private Long senderId;
-
-	private AppUserDto receiver;
+	private AppUserDto sender;
 
 	@NotNull(message = "Receiver id must contain a user id")
 	private Long receiverId;
+	private AppUserDto receiver;
 
 	private Instant createdAt;
 

@@ -8,12 +8,13 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 
 public final class FriendshipMJV {
 
-	private static final FilterProvider PUBLIC_FILTER =
-			new SimpleFilterProvider().addFilter("friendshipDtoFilter", SimpleBeanPropertyFilter.serializeAll());
+	private static final FilterProvider FRIENDSHIP_FILTER = new SimpleFilterProvider()
+			.addFilter("appUserDtoFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "username"))
+			.addFilter("friendshipDtoFilter", SimpleBeanPropertyFilter.serializeAllExcept("senderId", "receiverId"));
 
-	public static <T> MappingJacksonValue publicFilter(T dto) {
+	public static <T> MappingJacksonValue friendshipFilter(T dto) {
 		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(dto);
-		mappingJacksonValue.setFilters(PUBLIC_FILTER);
+		mappingJacksonValue.setFilters(FRIENDSHIP_FILTER);
 		return mappingJacksonValue;
 	}
 
