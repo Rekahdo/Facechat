@@ -20,7 +20,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -144,7 +143,7 @@ public class AppUserService {
 		if (users.isEmpty()) throw new EmptyListException();
 
 		Page<AppUserDto> userDtos = users.map(mapper::toDto);
-		PagedModel<AppUserDto> pagedModel = pageLinkBuilder.initialize(dto, userDtos, methodOn(AppUserController.class).getUsers(dto)).build();
+		PagedModel<AppUserDto> pagedModel = pageLinkBuilder.getPagedModel(dto, userDtos, methodOn(AppUserController.class).getUsers(dto));
 		return ResponseEntity.ok(AppUserMJV.publicFilter(pagedModel));
 	}
 

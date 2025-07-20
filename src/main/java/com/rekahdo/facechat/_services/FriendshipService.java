@@ -16,11 +16,7 @@ import com.rekahdo.facechat.mappingJacksonValue.FriendshipMJV;
 import com.rekahdo.facechat.utilities.PageRequestUriBuilder;
 import com.rekahdo.facechat.utilities.StringFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PagedListHolder;
-import org.springframework.beans.support.PropertyComparator;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -119,26 +115,15 @@ public class FriendshipService {
 		List<Friendship> friendships = repo.findByUserIdAndStatusIn(userId, statuses);
 		if (friendships.isEmpty()) throw new EmptyListException();
 
-		// PagedListHolder
-		PagedListHolder<Friendship> pagedListHolder = new PagedListHolder<>(friendships);
-		pagedListHolder.setPage(dto.getPage());
-		pagedListHolder.setPageSize(dto.getSize());
-
-		// Property Comparator
-		List<Friendship> pageSlice = pagedListHolder.getPageList();
-		boolean ascending = dto.isAscend();
-		PropertyComparator.sort(pageSlice, new MutableSortDefinition(dto.getSortByField(), true, ascending));
-
-		// PageImpl
-		Page<Friendship> page = new PageImpl<>(pageSlice, new PageRequestDto().getPageable(dto), friendships.size());
-		Page<FriendshipDto> pageDto = page.map(friendship -> {
-			FriendshipDto dto2 = mapper.toDto(friendship);
-			dto2.setFriend(getFriendDto(friendship, userId));
-			return dto2;
-		});
+		Page<FriendshipDto> pageDto = pageLinkBuilder.getPagedList(dto, friendships)
+				.map(friendship -> {
+					FriendshipDto dto2 = mapper.toDto(friendship);
+					dto2.setFriend(getFriendDto(friendship, userId));
+					return dto2;
+				});
 
 		PagedModel<FriendshipDto> pagedModel =
-				pageLinkBuilder.initialize(dto, pageDto, methodOn(FriendshipController.class).getFriendships(userId, dto, status)).build();
+				pageLinkBuilder.getPagedModel(dto, pageDto, methodOn(FriendshipController.class).getFriendships(userId, dto, status));
 
 		return ResponseEntity.ok(FriendshipMJV.friendshipFilter(pagedModel));
 	}
