@@ -10,7 +10,7 @@ public final class FriendshipMJV {
 
 	private static final FilterProvider FRIENDSHIP_FILTER = new SimpleFilterProvider()
 			.addFilter("appUserDtoFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "username"))
-			.addFilter("friendshipDtoFilter", SimpleBeanPropertyFilter.serializeAllExcept("senderId", "receiverId"));
+			.addFilter("friendshipDtoFilter", SimpleBeanPropertyFilter.serializeAllExcept("friendId"));
 
 	public static <T> MappingJacksonValue friendshipFilter(T dto) {
 		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(dto);

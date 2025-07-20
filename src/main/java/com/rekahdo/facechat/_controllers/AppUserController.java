@@ -28,6 +28,18 @@ public class AppUserController {
 		return service.loginUser(dto);
 	}
 
+	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #dto) OR hasRole('ADMIN') OR hasRole('EDITOR')")
+	@PutMapping(path = "", consumes = "application/json")
+	public ResponseEntity<?> putUser(@Valid @RequestBody AppUserDto dto) {
+		return service.putUser(dto);
+	}
+
+	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #dto) OR hasRole('ADMIN') OR hasRole('EDITOR')")
+	@PatchMapping(path = "", consumes = "application/json")
+	public ResponseEntity<?> patchUser(@Valid @RequestBody AppUserDto dto) {
+		return service.patchUser(dto);
+	}
+
 	@PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
 	@GetMapping("")
 	public ResponseEntity<?> getUsers(@ModelAttribute PageRequestDto dto) {
@@ -38,18 +50,6 @@ public class AppUserController {
 	@GetMapping("/{userId}")
 	public ResponseEntity<?> getUser(@PathVariable Long userId) {
 		return service.getUser(userId);
-	}
-
-	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('EDITOR')")
-	@PutMapping(path = "/{userId}", consumes = "application/json")
-	public ResponseEntity<?> putUser(@PathVariable Long userId, @Valid @RequestBody AppUserDto dto) {
-		return service.putUser(userId, dto);
-	}
-
-	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('EDITOR')")
-	@PatchMapping(path = "/{userId}", consumes = "application/json")
-	public ResponseEntity<?> patchUser(@PathVariable Long userId, @Valid @RequestBody AppUserDto dto) {
-		return service.patchUser(userId, dto);
 	}
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN')")

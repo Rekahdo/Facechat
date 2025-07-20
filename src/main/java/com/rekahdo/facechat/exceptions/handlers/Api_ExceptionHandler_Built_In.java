@@ -1,7 +1,5 @@
 package com.rekahdo.facechat.exceptions.handlers;
-import com.rekahdo.facechat.exceptions.classes.EmptyListException;
-import com.rekahdo.facechat.exceptions.classes.UserIdNotFoundException;
-import com.rekahdo.facechat.exceptions.classes.UsernameExistException;
+import com.rekahdo.facechat.exceptions.classes.*;
 import com.rekahdo.facechat.exceptions.model.ErrorResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -21,26 +19,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import static com.rekahdo.facechat.enums.Error.*;
 
 @RestControllerAdvice
-public class Api_ExceptionHandler {
-
-    // API DEFINED EXCEPTIONS
-    @ExceptionHandler(UserIdNotFoundException.class)
-    public ResponseEntity<?> handleUserIdNotFoundException(UserIdNotFoundException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
-        return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
-    }
-
-    @ExceptionHandler(UsernameExistException.class)
-    public ResponseEntity<?> handleUsernameExistException(UsernameExistException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
-        return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
-    }
-
-    @ExceptionHandler(EmptyListException.class)
-    public ResponseEntity<?> handleEmptyListException(EmptyListException ex, WebRequest request){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
-        return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
-    }
+public class Api_ExceptionHandler_Built_In {
 
     // IN-BUILT DEFINED EXCEPTIONS
     @ExceptionHandler(UsernameNotFoundException.class)
@@ -97,7 +76,7 @@ public class Api_ExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errorResponse.fetchMJV());
     }
 
-//    @ExceptionHandler(HttpMessageConversionException.class)
+    @ExceptionHandler(HttpMessageConversionException.class)
     public ResponseEntity<?> handleHttpMessageConversionException(HttpMessageConversionException ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(UNKNOWN_VIOLATION, ex, request);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse.fetchMJV());

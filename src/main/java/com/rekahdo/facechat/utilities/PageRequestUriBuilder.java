@@ -17,7 +17,7 @@ public class PageRequestUriBuilder {
         UriComponentsBuilder builder = linkTo(methodOn).toUriComponentsBuilder()
                 .queryParam("page", page)
                 .queryParam("size", dto.getSize())
-                .queryParam("sort", dto.getSort())
+                .queryParam("ascend", dto.isAscend())
                 .queryParam("sortByField", dto.getSortByField());
 		return Link.of(builder.build().toUriString(), relation);
 	}
@@ -38,5 +38,7 @@ public class PageRequestUriBuilder {
         assert pagedModel.getMetadata() != null;
         return buildLink(invocationValue, dto, (int)(pagedModel.getMetadata().getTotalPages()-1), "last");
 	}
+
+//	public
 
 }

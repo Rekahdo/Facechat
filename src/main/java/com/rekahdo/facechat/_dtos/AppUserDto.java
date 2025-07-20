@@ -49,6 +49,11 @@ public class AppUserDto extends EntityDto<AppUserDto> {
 		this.email = email;
 	}
 
+	public AppUserDto(Long id, String username) {
+		this.id = id;
+		this.username = username;
+	}
+
 	// GETTERS AND SETTERS
 	public String getRoles() {
 		return roles == null ? null : roles.toUpperCase();

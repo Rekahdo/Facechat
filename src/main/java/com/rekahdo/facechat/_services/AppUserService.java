@@ -33,6 +33,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -95,6 +96,49 @@ public class AppUserService {
 		return ResponseEntity.ok(jwtService.createToken(authentication));
 	}
 
+	public ResponseEntity<?> putUser(AppUserDto dto) {
+		Optional<AppUser> optional = repo.findById(dto.getId());
+		if(optional.isEmpty())
+			throw new UserIdNotFoundException(dto.getId());
+
+		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+		dto.setUpdatedAt(Instant.now());
+
+		if(dto.hasRoles()){
+			if(AuthUser.IS_NOT_AN_ADMIN() && dto.adminKeyIsNotValid(adminKey))
+				throw new AccessDeniedException(ErrorMessage.ADMIN_KEY);
+
+			authorityRepository.deleteByAppUserId(dto.getId());
+		}
+
+		AppUser user = optional.get();
+		mapper.updateEntity(dto, user);
+		dto = mapper.toDto(repo.save(user));
+		return ResponseEntity.ok(AppUserMJV.privateFilter(dto,true));
+	}
+
+	public ResponseEntity<?> patchUser(AppUserDto dto) {
+		Optional<AppUser> optional = repo.findById(dto.getId());
+		if(optional.isEmpty())
+			throw new UserIdNotFoundException(dto.getId());
+
+		if(dto.getPassword() != null)
+			dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+		if(dto.hasRoles()){
+			if(AuthUser.IS_NOT_AN_ADMIN() && dto.adminKeyIsNotValid(adminKey))
+				throw new AccessDeniedException(ErrorMessage.ADMIN_KEY);
+
+			authorityRepository.deleteByAppUserId(dto.getId());
+		}
+
+		dto.setUpdatedAt(Instant.now());
+		AppUser user = optional.get();
+		mapper.updateEntity(dto, user);
+		dto = mapper.toDto(repo.save(user));
+		return ResponseEntity.ok(AppUserMJV.privateFilter(dto));
+	}
+
 	public ResponseEntity<?> getUsers(PageRequestDto dto) {
 		Page<AppUser> users = repo.findAll(dto.getPageable(dto));
 		if (users.isEmpty()) throw new EmptyListException();
@@ -128,43 +172,6 @@ public class AppUserService {
 		if(AuthUser.IS_AN_ADMIN() || AuthUser.IS_A_MODERATOR())
 			dto.add(linkTo(methodOn(AppUserController.class).getUsers(new PageRequestDto())).withRel("users"));
 
-		return ResponseEntity.ok(AppUserMJV.privateFilter(dto));
-	}
-
-	public ResponseEntity<?> putUser(Long id, AppUserDto dto) {
-		AppUser user = repo.findById(id).orElseThrow(() -> new UserIdNotFoundException(id));
-
-		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-		dto.setUpdatedAt(Instant.now());
-
-		if(dto.hasRoles()){
-			if(AuthUser.IS_NOT_AN_ADMIN() && dto.adminKeyIsNotValid(adminKey))
-				throw new AccessDeniedException(ErrorMessage.ADMIN_KEY);
-
-			authorityRepository.deleteByAppUserId(id);
-		}
-
-		mapper.updateEntity(dto, user);
-		dto = mapper.toDto(repo.save(user));
-		return ResponseEntity.ok(AppUserMJV.privateFilter(dto,true));
-	}
-
-	public ResponseEntity<?> patchUser(Long id, AppUserDto dto) {
-		AppUser user = repo.findById(id).orElseThrow(() -> new UserIdNotFoundException(id));
-
-		if(dto.getPassword() != null)
-			dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-
-		if(dto.hasRoles()){
-			if(AuthUser.IS_NOT_AN_ADMIN() && dto.adminKeyIsNotValid(adminKey))
-				throw new AccessDeniedException(ErrorMessage.ADMIN_KEY);
-
-			authorityRepository.deleteByAppUserId(id);
-		}
-
-		dto.setUpdatedAt(Instant.now());
-		mapper.updateEntity(dto, user);
-		dto = mapper.toDto(repo.save(user));
 		return ResponseEntity.ok(AppUserMJV.privateFilter(dto));
 	}
 

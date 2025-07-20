@@ -24,10 +24,16 @@ public class FriendshipController {
 		return service.addFriendship(userId, dto);
 	}
 
+	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId)")
+	@PatchMapping(path = "", consumes = "application/json")
+	public ResponseEntity<?> editFriendship(@PathVariable Long userId, @Valid @RequestBody FriendshipDto dto) {
+		return service.editFriendship(userId, dto);
+	}
+
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('MODERATOR')")
 	@GetMapping(path = "")
 	public ResponseEntity<?> getFriendships(@PathVariable Long userId, @ModelAttribute PageRequestDto dto,
-			@RequestParam(defaultValue = "ACCEPTED", required = false) String status) {
+			@RequestParam(defaultValue = "ACCEPTED,PENDING,BLOCKED", required = false) String status) {
 		return service.getFriendships(userId, dto, status);
 	}
 
@@ -35,13 +41,6 @@ public class FriendshipController {
 	@GetMapping(path = "/{friendId}")
 	public ResponseEntity<?> getFriendship(@PathVariable Long userId, @PathVariable Long friendId) {
 		return service.getFriendship(userId, friendId);
-	}
-
-	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId)")
-	@PatchMapping(path = "/{friendId}", consumes = "application/json")
-	public ResponseEntity<?> editFriendship(@PathVariable Long userId, @PathVariable Long friendId,
-			@Valid @RequestBody FriendshipDto dto) {
-		return service.editFriendship(userId, friendId, dto);
 	}
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId)")

@@ -1,5 +1,6 @@
 package com.rekahdo.facechat._dtos;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.hateoas.server.core.Relation;
 @Relation(collectionRelation = "items")
 public class EntityDto<T extends EntityDto<T>> extends RepresentationModel<T> {
 
+//	@NotNull(message = "Id field must contain a value")
 	private Long id;
 
 }

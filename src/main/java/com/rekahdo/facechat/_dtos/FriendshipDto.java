@@ -20,24 +20,19 @@ import java.time.Instant;
 @JsonFilter("friendshipDtoFilter")
 public class FriendshipDto extends EntityDto<FriendshipDto> {
 
-	private Long id;
-
 	@Enumerated(EnumType.STRING)
 	private FriendshipStatus status;
 
-	private boolean isFriendRequestSender;
+	private boolean isOnceFriends;
 
-	private Long senderId;
-	private AppUserDto sender;
+	@NotNull(message = "Friend id must contain a user id")
+	private Long friendId;
 
-	@NotNull(message = "Receiver id must contain a user id")
-	private Long receiverId;
-	private AppUserDto receiver;
+	private AppUserDto friend;
+	private Instant acceptedAt;
 
-	private Instant createdAt;
-
-	public FriendshipDto(Long receiverId) {
-		this.receiverId = receiverId;
+	public FriendshipDto(Long friendId) {
+		this.friendId = friendId;
 	}
 
 }

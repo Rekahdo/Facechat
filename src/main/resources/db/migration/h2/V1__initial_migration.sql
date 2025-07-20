@@ -13,16 +13,17 @@ CREATE TABLE authorities (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     role VARCHAR(50) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE friendships (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     status VARCHAR(50) NOT NULL,
+    is_once_friends BOOLEAN DEFAULT FALSE,
     sender_id BIGINT NOT NULL,
     receiver_id BIGINT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES users(id),
-    FOREIGN KEY (receiver_id) REFERENCES users(id),
+    accepted_at DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
     UNIQUE(sender_id, receiver_id)
 );

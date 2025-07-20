@@ -23,6 +23,8 @@ public class Friendship {
 	@Enumerated(EnumType.STRING)
 	private FriendshipStatus status;
 
+	private boolean isOnceFriends;
+
 	@ManyToOne
 	@JoinColumn(name = "sender_id")
 	@JsonIgnore
@@ -33,7 +35,7 @@ public class Friendship {
 	@JsonIgnore
 	private AppUser receiver;
 
-	private Instant createdAt;
+	private Instant acceptedAt;
 
 	@OneToMany(mappedBy = "friendship", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Chat> chats = new ArrayList<>();

@@ -34,9 +34,6 @@ public class FriendshipPopulator {
             // rekahdo and john
             service.addFriendship(1L, new FriendshipDto(2L));
 
-            // rekahdo and mary
-            service.addFriendship(3L, new FriendshipDto(1L));
-
             // rekahdo and paul
             service.addFriendship(1L, new FriendshipDto(4L));
 
