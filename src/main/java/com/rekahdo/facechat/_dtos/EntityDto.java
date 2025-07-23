@@ -15,7 +15,6 @@ import org.springframework.hateoas.server.core.Relation;
 @Relation(collectionRelation = "items")
 public class EntityDto<T extends EntityDto<T>> extends RepresentationModel<T> {
 
-//	@NotNull(message = "Id field must contain a value")
 	private Long id;
 
 }

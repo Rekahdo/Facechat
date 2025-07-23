@@ -1,7 +1,7 @@
 package com.rekahdo.facechat._controllers;
 
 import com.rekahdo.facechat._dtos.AppUserDto;
-import com.rekahdo.facechat._dtos.PageRequestDto;
+import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._services.AppUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

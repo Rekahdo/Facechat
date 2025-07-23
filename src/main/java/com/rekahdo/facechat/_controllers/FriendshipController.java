@@ -1,7 +1,7 @@
 package com.rekahdo.facechat._controllers;
 
 import com.rekahdo.facechat._dtos.FriendshipDto;
-import com.rekahdo.facechat._dtos.PageRequestDto;
+import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._services.FriendshipService;
 import com.rekahdo.facechat.enums.FriendshipStatus;
 import org.springframework.beans.factory.annotation.Autowired;

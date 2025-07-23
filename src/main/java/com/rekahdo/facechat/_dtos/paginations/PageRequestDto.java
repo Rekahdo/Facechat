@@ -1,21 +1,30 @@
-package com.rekahdo.facechat._dtos;
+package com.rekahdo.facechat._dtos.paginations;
 
 import com.rekahdo.facechat.utilities.StringFormat;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.Objects;
 
+@NoArgsConstructor
 public class PageRequestDto {
 
 	private Integer page = 0;
 
-	private Integer size = 2;
+	private Integer size = 10;
 
 	private boolean ascend = true;
 
 	private String sortByField = "id";
+
+	public PageRequestDto(Integer page, Integer size, boolean ascend, String sortByField) {
+		this.page = page;
+		this.size = size;
+		this.ascend = ascend;
+		this.sortByField = sortByField;
+	}
 
 	public Pageable getPageable(PageRequestDto dto){
 		Integer pageNo = (Objects.nonNull(dto.getPage()) ? dto.getPage() : this.page);

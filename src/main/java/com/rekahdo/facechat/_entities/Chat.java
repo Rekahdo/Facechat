@@ -1,5 +1,6 @@
 package com.rekahdo.facechat._entities;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,29 +22,28 @@ public class Chat {
 
 	private String content;
 
+	@Enumerated(EnumType.STRING)
 	private ContentType contentType;
 
-	private LocalDateTime sentTime;
-
-	private LocalDateTime deliveredTime;
-
-	private LocalDateTime seenTime;
-
+	@Enumerated(EnumType.STRING)
 	private ChatStatus status;
 
-	@ManyToOne
-	@JoinColumn(name = "friendship_id")
-	@JsonIgnore
-	private Friendship friendship;
+	private Instant sentAt;
+
+	private Instant deliveredAt;
+
+	private Instant seenAt;
 
 	@ManyToOne
 	@JoinColumn(name = "sender_id")
-	@JsonIgnore
 	private AppUser sender;
 
 	@ManyToOne
 	@JoinColumn(name = "receiver_id")
-	@JsonIgnore
 	private AppUser receiver;
+
+	@ManyToOne
+	@JoinColumn(name = "friendship_id")
+	private Friendship friendship;
 
 }

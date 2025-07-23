@@ -40,4 +40,13 @@ public class Friendship {
 	@OneToMany(mappedBy = "friendship", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Chat> chats = new ArrayList<>();
 
+	public Friendship(FriendshipStatus status, AppUser sender, AppUser receiver) {
+		this.status = status;
+		this.sender = sender;
+		this.receiver = receiver;
+	}
+
+	public Friendship(Long id) {
+		this.id = id;
+	}
 }

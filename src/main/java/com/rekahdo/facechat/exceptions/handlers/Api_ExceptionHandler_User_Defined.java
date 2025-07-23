@@ -58,4 +58,10 @@ public class Api_ExceptionHandler_User_Defined {
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
+    @ExceptionHandler(ChatNotFoundException.class)
+    public ResponseEntity<?> handleChatNotFoundException(ChatNotFoundException ex, WebRequest request){
+        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
+    }
+
 }

@@ -19,12 +19,10 @@ import org.springframework.stereotype.Component;
 public class FriendshipPopulator {
 
     private final FriendshipService service;
-    private final AppUserRepository appUserRepository;
     private final boolean recordInserted;
 
     public FriendshipPopulator(FriendshipService service, AppUserRepository appUserRepository) {
         this.service = service;
-        this.appUserRepository = appUserRepository;
         recordInserted = appUserRepository.existsByUsername("rekahdo");
     }
 

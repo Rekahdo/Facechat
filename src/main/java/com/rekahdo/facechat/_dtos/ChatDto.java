@@ -1,5 +1,7 @@
 package com.rekahdo.facechat._dtos;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rekahdo.facechat.enums.ChatStatus;
 import com.rekahdo.facechat.enums.ContentType;
 import jakarta.persistence.EnumType;
@@ -11,12 +13,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@JsonFilter("chatDtoFilter")
 public class ChatDto extends EntityDto<ChatDto>{
 
 	@NotNull
@@ -27,19 +31,41 @@ public class ChatDto extends EntityDto<ChatDto>{
 	@Enumerated(EnumType.STRING)
 	private ContentType contentType;
 
-	private LocalDateTime sentTime;
-
-	private LocalDateTime deliveredTime;
-
-	private LocalDateTime seenTime;
-
 	@Enumerated(EnumType.STRING)
 	private ChatStatus status;
 
+	private Instant sentAt;
+
+	private Instant deliveredAt;
+
+	private Instant seenAt;
+
+	private long unread;
+
+	@NotNull(message = "Friend id must contain a user id")
+	private Long friendId;
+
+	private AppUserDto sender;
+	private AppUserDto receiver;
+	private AppUserDto friend;
 	private Long friendshipId;
 
-	private Long senderId;
+	public ChatDto(String content, ChatStatus status, Instant sentAt, Instant deliveredAt, Instant seenAt, Long friendId, Long friendshipId) {
+		this.content = content;
+		this.status = status;
+		this.sentAt = sentAt;
+		this.deliveredAt = deliveredAt;
+		this.seenAt = seenAt;
+		this.friendId = friendId;
+		this.friendshipId = friendshipId;
+	}
 
-	private Long receiverId;
-
+	public ChatDto(String content, ChatStatus status, Instant sentAt, Instant deliveredAt, Instant seenAt, Long friendId) {
+		this.content = content;
+		this.status = status;
+		this.sentAt = sentAt;
+		this.deliveredAt = deliveredAt;
+		this.seenAt = seenAt;
+		this.friendId = friendId;
+	}
 }

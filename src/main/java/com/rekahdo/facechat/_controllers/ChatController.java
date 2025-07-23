@@ -1,6 +1,8 @@
 package com.rekahdo.facechat._controllers;
 
 import com.rekahdo.facechat._dtos.ChatDto;
+import com.rekahdo.facechat._dtos.paginations.ChatPageRequestDto;
+import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,26 +26,27 @@ public class ChatController {
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('MODERATOR')")
 	@GetMapping(path = "")
-	public ResponseEntity<?> getChats(@PathVariable Long userId) {
-		return service.getChats(userId);
+	public ResponseEntity<?> getChats(@PathVariable Long userId, @ModelAttribute ChatPageRequestDto dto,
+									  @RequestParam(required = false, defaultValue = "0") Long friendId) {
+		return service.getChats(userId, dto, friendId);
 	}
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('MODERATOR')")
 	@GetMapping(path = "/{chatId}")
-	public ResponseEntity<?> getChat(@PathVariable Long userId, Long chatId) {
+	public ResponseEntity<?> getChat(@PathVariable Long userId, @PathVariable Long chatId) {
 		return service.getChat(userId, chatId);
 	}
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId)")
 	@PatchMapping(path = "/{chatId}")
-	public ResponseEntity<?> editChat(@PathVariable Long userId, @RequestParam Long chatId,
+	public ResponseEntity<?> editChat(@PathVariable Long userId, @PathVariable Long chatId,
 									  @Valid @RequestBody ChatDto dto) {
 		return service.editChat(userId, chatId, dto);
 	}
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId)")
 	@DeleteMapping(path = "/{chatId}")
-	public ResponseEntity<?> deleteChat(@PathVariable Long userId, @RequestParam Long chatId) {
+	public ResponseEntity<?> deleteChat(@PathVariable Long userId, @PathVariable Long chatId) {
 		return service.deleteChat(userId, chatId);
 	}
 

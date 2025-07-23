@@ -27,3 +27,19 @@ CREATE TABLE friendships (
     FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
     UNIQUE(sender_id, receiver_id)
 );
+
+CREATE TABLE chats (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    content VARCHAR(255) NOT NULL,
+    content_type VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    sender_id BIGINT NOT NULL,
+    receiver_id BIGINT NOT NULL,
+    friendship_id BIGINT NULL,
+    sent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    delivered_at DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+    seen_at DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (friendship_id) REFERENCES friendships(id) ON DELETE SET NULL
+);

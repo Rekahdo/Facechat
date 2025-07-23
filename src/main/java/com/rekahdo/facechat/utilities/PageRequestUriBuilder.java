@@ -1,7 +1,7 @@
 package com.rekahdo.facechat.utilities;
 
 import com.rekahdo.facechat._dtos.EntityDto;
-import com.rekahdo.facechat._dtos.PageRequestDto;
+import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.beans.support.PropertyComparator;
@@ -21,14 +21,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @Lazy
 public class PageRequestUriBuilder<DTO extends EntityDto<DTO>> {
 
-	public <ENTITY> Page<ENTITY> getPagedList(PageRequestDto requestDto, List<ENTITY> entities){
+	public <T> Page<T> getPagedList(PageRequestDto requestDto, List<T> entities){
 		// PagedListHolder
-		PagedListHolder<ENTITY> pagedListHolder = new PagedListHolder<>(entities);
+		PagedListHolder<T> pagedListHolder = new PagedListHolder<>(entities);
 		pagedListHolder.setPage(requestDto.getPage());
 		pagedListHolder.setPageSize(requestDto.getSize());
 
 		// Property Comparator
-		List<ENTITY> pageSlice = pagedListHolder.getPageList();
+		List<T> pageSlice = pagedListHolder.getPageList();
 		boolean ascending = requestDto.isAscend();
 		PropertyComparator.sort(pageSlice, new MutableSortDefinition(requestDto.getSortByField(), true, ascending));
 
