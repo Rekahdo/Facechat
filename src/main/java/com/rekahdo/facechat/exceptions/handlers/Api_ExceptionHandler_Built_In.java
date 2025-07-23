@@ -28,55 +28,55 @@ public class Api_ExceptionHandler_Built_In {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.UNAUTHORIZED, request);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(AuthorizationDeniedException.class)
     public ResponseEntity<?> handleAuthorizationDeniedException(AuthorizationDeniedException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.UNAUTHORIZED, request);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.UNAUTHORIZED, request);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<?> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.CONFLICT, request);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<?> handleNullPointerException(NullPointerException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_ACCEPTABLE, request);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_ACCEPTABLE, request);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(JpaSystemException.class)
     public ResponseEntity<?> handleJpaSystemException(JpaSystemException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.INTERNAL_SERVER_ERROR, request);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(UnsupportedOperationException.class)
     public ResponseEntity<?> handleUnsupportedOperationException(UnsupportedOperationException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_ACCEPTABLE, request);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(HttpMessageConversionException.class)
     public ResponseEntity<?> handleHttpMessageConversionException(HttpMessageConversionException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.INTERNAL_SERVER_ERROR, request);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse.fetchMJV());
     }
 

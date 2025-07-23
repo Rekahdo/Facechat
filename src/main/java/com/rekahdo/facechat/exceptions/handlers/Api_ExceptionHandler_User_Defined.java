@@ -30,25 +30,25 @@ public class Api_ExceptionHandler_User_Defined {
 
     @ExceptionHandler(UsernameExistException.class)
     public ResponseEntity<?> handleUsernameExistException(UsernameExistException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.CONFLICT, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(EmptyListException.class)
     public ResponseEntity<?> handleEmptyListException(EmptyListException ex, WebRequest request){
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NO_CONTENT, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(OnlyReceiverException.class)
     public ResponseEntity<?> handleOnlyReceiverException(OnlyReceiverException ex, WebRequest request){
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.UNAUTHORIZED, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(ModificationException.class)
     public ResponseEntity<?> handleModificationException(ModificationException ex, WebRequest request){
-        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_ACCEPTABLE, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
