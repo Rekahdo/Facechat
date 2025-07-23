@@ -10,7 +10,7 @@ public class UserIdNotFoundException extends Api_Exception {
 	private final Long userId;
 
 	public UserIdNotFoundException(Long userId) {
-		super(String.format("USER WITH ID '%d' NOT FOUND", userId), HttpStatus.NOT_FOUND, Error.USER_ID_NOT_FOUND_VIOLATION);
+		super(String.format("USER WITH ID '%d' NOT FOUND", userId), HttpStatus.NOT_FOUND);
 		this.userId = userId;
 	}
 

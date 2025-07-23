@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 public class FriendshipExistException extends Api_Exception {
 
 	public FriendshipExistException(Long id) {
-		super(String.format("FRIENDSHIP EXIST WITH USER ID '%d'", id), HttpStatus.CONFLICT, Error.UNKNOWN_VIOLATION);
+		super(String.format("FRIENDSHIP EXIST WITH USER ID '%d'", id), HttpStatus.CONFLICT);
 	}
 
 }

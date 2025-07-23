@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 public class OnlyReceiverException extends Api_Exception {
 
 	public OnlyReceiverException(String message) {
-		super(message, HttpStatus.UNAUTHORIZED, Error.UNKNOWN_VIOLATION);
+		super(message, HttpStatus.UNAUTHORIZED);
 	}
 
 }

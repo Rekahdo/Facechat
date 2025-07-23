@@ -10,7 +10,7 @@ public class ChatNotFoundException extends Api_Exception {
 	private final Long chatId;
 
 	public ChatNotFoundException(Long chatId) {
-		super(String.format("CHAT WITH ID '%d' NOT FOUND", chatId), HttpStatus.NOT_FOUND, Error.UNKNOWN_VIOLATION);
+		super(String.format("CHAT WITH ID '%d' NOT FOUND", chatId), HttpStatus.NOT_FOUND);
 		this.chatId = chatId;
 	}
 

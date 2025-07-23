@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 public class ModificationException extends Api_Exception {
 
 	public ModificationException(String message) {
-		super(message, HttpStatus.NOT_ACCEPTABLE, Error.UNKNOWN_VIOLATION);
+		super(message, HttpStatus.NOT_ACCEPTABLE);
 	}
 
 }

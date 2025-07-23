@@ -11,7 +11,7 @@ public class UsernameExistException extends Api_Exception {
 	private final String username;
 
 	public UsernameExistException(String username) {
-		super(String.format("USER WITH NAME '%s' EXIST", username), HttpStatus.FOUND, Error.USERNAME_EXIST_VIOLATION);
+		super(String.format("USER WITH NAME '%s' EXIST", username), HttpStatus.FOUND);
 		this.username = username;
 	}
 

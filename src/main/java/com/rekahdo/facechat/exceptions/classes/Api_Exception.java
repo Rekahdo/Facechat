@@ -8,12 +8,10 @@ import org.springframework.http.HttpStatusCode;
 public class Api_Exception extends RuntimeException {
 
 	private final HttpStatusCode statusCode;
-	private final Error statusValue;
 
-	public Api_Exception(String message,  HttpStatusCode statusCode, Error statusValue) {
+	public Api_Exception(String message,  HttpStatusCode statusCode) {
 		super(message);
 		this.statusCode = statusCode;
-		this.statusValue = statusValue;
 	}
 
 }
