@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.rekahdo.facechat.enums.Error;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
@@ -22,61 +24,65 @@ public class ErrorResponse {
 
     private interface MultiErrorView extends SingleErrorView {};
 
-    @JsonView(SingleErrorView.class)
+    @JsonView(ErrorResponse.SingleErrorView.class)
     private String exception;
 
     @JsonView(ErrorResponse.SingleErrorView.class)
-    private String trace;
+    private String line;
 
-    @JsonView(SingleErrorView.class)
-    private Error error;
+    @JsonView(ErrorResponse.SingleErrorView.class)
+    private int code;
 
-    @JsonView(SingleErrorView.class)
+    @JsonView(ErrorResponse.SingleErrorView.class)
+    private HttpStatus status;
+
+    @JsonView(ErrorResponse.SingleErrorView.class)
     private String message;
 
-    @JsonView(MultiErrorView.class)
+    @JsonView(ErrorResponse.MultiErrorView.class)
     private List<String> messages;
 
-    @JsonView(SingleErrorView.class)
+    @JsonView(ErrorResponse.SingleErrorView.class)
     private int errorCount = 1;
 
-    @JsonView(SingleErrorView.class)
+    @JsonView(ErrorResponse.SingleErrorView.class)
     private String description;
 
-    @JsonView(SingleErrorView.class)
-    private String status;
-
-    @JsonView(SingleErrorView.class)
+    @JsonView(ErrorResponse.SingleErrorView.class)
     private Instant timestamp = Instant.now();
+
+    @JsonView(ErrorResponse.SingleErrorView.class)
+    private StackTraceElement[] trace;
 
     @JsonIgnore
     private boolean isMultiErrors;
 
-    public ErrorResponse(Error statusValue, Exception ex, WebRequest request) {
+    public ErrorResponse(Exception ex, HttpStatusCode statusCode, WebRequest request) {
         this.exception = String.format("%s.class", ex.getClass().getSimpleName());
-        this.trace = fetchTrace(ex);
-        this.status = null;
+        this.line = fetchLine(ex);
+        this.code = statusCode.value();;
+        this.status = HttpStatus.valueOf(statusCode.value());;
         this.isMultiErrors = (ex instanceof BindException);
-        this.error = statusValue;
         this.message = (!isMultiErrors ? ex.getMessage() : null);
         this.messages = (isMultiErrors ? ((BindException) ex).getAllErrors().stream()
                 .map(ObjectError::getDefaultMessage).toList() : Collections.emptyList());
         this.errorCount = (isMultiErrors ? ((BindException) ex).getErrorCount() : 1);
         this.description = request.getDescription(true);
+        this.trace = ex.getStackTrace();
     }
 
     public MappingJacksonValue fetchMJV() {
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(this);
         mappingJacksonValue.setSerializationView((isMultiErrors ?
-                MultiErrorView.class : SingleErrorView.class));
+                ErrorResponse.MultiErrorView.class : ErrorResponse.SingleErrorView.class));
         return mappingJacksonValue;
     }
 
-    private String fetchTrace(Exception ex){
+    private String fetchLine(Exception ex){
         StackTraceElement[] stackTrace = ex.getStackTrace();
         return stackTrace.length > 0
                 ? String.format("%s.%s:line-%d", stackTrace[0].getClassName(),
-                    stackTrace[0].getMethodName(), stackTrace[0].getLineNumber())
+                stackTrace[0].getMethodName(), stackTrace[0].getLineNumber())
                 : "Unknown";
     }
 

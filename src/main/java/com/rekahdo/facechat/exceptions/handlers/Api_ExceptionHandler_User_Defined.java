@@ -24,43 +24,43 @@ public class Api_ExceptionHandler_User_Defined {
     // API DEFINED EXCEPTIONS
     @ExceptionHandler(UserIdNotFoundException.class)
     public ResponseEntity<?> handleUserIdNotFoundException(UserIdNotFoundException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(UsernameExistException.class)
     public ResponseEntity<?> handleUsernameExistException(UsernameExistException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(EmptyListException.class)
     public ResponseEntity<?> handleEmptyListException(EmptyListException ex, WebRequest request){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(OnlyReceiverException.class)
     public ResponseEntity<?> handleOnlyReceiverException(OnlyReceiverException ex, WebRequest request){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(ModificationException.class)
     public ResponseEntity<?> handleModificationException(ModificationException ex, WebRequest request){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(FriendshipNotFoundException.class)
     public ResponseEntity<?> handleFriendshipNotFoundException(FriendshipNotFoundException ex, WebRequest request){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
     @ExceptionHandler(ChatNotFoundException.class)
     public ResponseEntity<?> handleChatNotFoundException(ChatNotFoundException ex, WebRequest request){
-        ErrorResponse errorResponse = new ErrorResponse(ex.getStatusValue(), ex, request);
+        ErrorResponse errorResponse = new ErrorResponse(ex, HttpStatus.NOT_FOUND, request);
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse.fetchMJV());
     }
 
