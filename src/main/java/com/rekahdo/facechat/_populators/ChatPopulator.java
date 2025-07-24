@@ -1,6 +1,6 @@
 package com.rekahdo.facechat._populators;
 
-import com.rekahdo.facechat._dtos.ChatDto;
+import com.rekahdo.facechat._dtos.entities.ChatDto;
 import com.rekahdo.facechat._repository.AppUserRepository;
 import com.rekahdo.facechat._services.ChatService;
 import com.rekahdo.facechat.enums.ChatStatus;

@@ -1,14 +1,9 @@
 package com.rekahdo.facechat._populators;
 
-import com.rekahdo.facechat._dtos.AppUserDto;
-import com.rekahdo.facechat._dtos.FriendshipDto;
-import com.rekahdo.facechat._entities.Friendship;
+import com.rekahdo.facechat._dtos.entities.FriendshipDto;
 import com.rekahdo.facechat._repository.AppUserRepository;
-import com.rekahdo.facechat._services.AppUserService;
 import com.rekahdo.facechat._services.FriendshipService;
-import com.rekahdo.facechat.enums.AuthorityRole;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

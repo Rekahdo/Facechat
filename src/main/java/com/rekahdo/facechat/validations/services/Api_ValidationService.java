@@ -1,6 +1,6 @@
 package com.rekahdo.facechat.validations.services;
 
-import com.rekahdo.facechat._dtos.AppUserDto;
+import com.rekahdo.facechat._dtos.entities.AppUserDto;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;

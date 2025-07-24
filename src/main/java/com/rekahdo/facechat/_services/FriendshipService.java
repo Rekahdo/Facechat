@@ -1,10 +1,9 @@
 package com.rekahdo.facechat._services;
 
 import com.rekahdo.facechat._controllers.FriendshipController;
-import com.rekahdo.facechat._dtos.AppUserDto;
-import com.rekahdo.facechat._dtos.FriendshipDto;
+import com.rekahdo.facechat._dtos.entities.AppUserDto;
+import com.rekahdo.facechat._dtos.entities.FriendshipDto;
 import com.rekahdo.facechat._dtos.paginations.FriendshipPageRequestDto;
-import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._entities.AppUser;
 import com.rekahdo.facechat._entities.Friendship;
 import com.rekahdo.facechat._mappers.AppUserMapper;

@@ -1,8 +1,7 @@
 package com.rekahdo.facechat._controllers;
 
-import com.rekahdo.facechat._dtos.ChatDto;
+import com.rekahdo.facechat._dtos.entities.ChatDto;
 import com.rekahdo.facechat._dtos.paginations.ChatPageRequestDto;
-import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,10 +1,9 @@
 package com.rekahdo.facechat._services;
 
 import com.rekahdo.facechat._controllers.ChatController;
-import com.rekahdo.facechat._dtos.AppUserDto;
-import com.rekahdo.facechat._dtos.ChatDto;
+import com.rekahdo.facechat._dtos.entities.AppUserDto;
+import com.rekahdo.facechat._dtos.entities.ChatDto;
 import com.rekahdo.facechat._dtos.paginations.ChatPageRequestDto;
-import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._entities.AppUser;
 import com.rekahdo.facechat._entities.Chat;
 import com.rekahdo.facechat._mappers.AppUserMapper;

@@ -1,6 +1,6 @@
 package com.rekahdo.facechat.utilities;
 
-import com.rekahdo.facechat._dtos.EntityDto;
+import com.rekahdo.facechat._dtos.entities.EntityDto;
 import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PagedListHolder;

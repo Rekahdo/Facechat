@@ -1,4 +1,4 @@
-package com.rekahdo.facechat._dtos;
+package com.rekahdo.facechat._dtos.entities;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.rekahdo.facechat.enums.AuthorityRole;

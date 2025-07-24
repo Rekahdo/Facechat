@@ -1,9 +1,8 @@
 package com.rekahdo.facechat._services;
 
 import com.rekahdo.facechat._controllers.AppUserController;
-import com.rekahdo.facechat._dtos.AppUserDto;
+import com.rekahdo.facechat._dtos.entities.AppUserDto;
 import com.rekahdo.facechat._dtos.paginations.AppUserPageRequestDto;
-import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._entities.AppUser;
 import com.rekahdo.facechat._mappers.AppUserMapper;
 import com.rekahdo.facechat._repository.AppUserRepository;
@@ -96,7 +95,7 @@ public class AppUserService {
 		return ResponseEntity.ok(jwtService.createToken(authentication));
 	}
 
-	public ResponseEntity<?> putUser(AppUserDto dto) {
+	public ResponseEntity<?> editUser(AppUserDto dto) {
 		Optional<AppUser> optional = repo.findById(dto.getId());
 		if(optional.isEmpty())
 			throw new UserIdNotFoundException(dto.getId());

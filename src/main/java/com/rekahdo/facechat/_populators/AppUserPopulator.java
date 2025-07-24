@@ -1,6 +1,6 @@
 package com.rekahdo.facechat._populators;
 
-import com.rekahdo.facechat._dtos.AppUserDto;
+import com.rekahdo.facechat._dtos.entities.AppUserDto;
 import com.rekahdo.facechat._repository.AppUserRepository;
 import com.rekahdo.facechat._services.AppUserService;
 import com.rekahdo.facechat.enums.AuthorityRole;

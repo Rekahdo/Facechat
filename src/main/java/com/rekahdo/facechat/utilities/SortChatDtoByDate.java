@@ -1,6 +1,6 @@
 package com.rekahdo.facechat.utilities;
 
-import com.rekahdo.facechat._dtos.ChatDto;
+import com.rekahdo.facechat._dtos.entities.ChatDto;
 
 import java.util.Comparator;
 

@@ -1,10 +1,7 @@
 package com.rekahdo.facechat._mappers;
 
-import com.rekahdo.facechat._dtos.ChatDto;
-import com.rekahdo.facechat._dtos.FriendshipDto;
-import com.rekahdo.facechat._entities.AppUser;
+import com.rekahdo.facechat._dtos.entities.ChatDto;
 import com.rekahdo.facechat._entities.Chat;
-import com.rekahdo.facechat._entities.Friendship;
 import org.mapstruct.*;
 
 import java.util.List;

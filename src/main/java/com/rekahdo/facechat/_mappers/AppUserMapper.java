@@ -1,7 +1,7 @@
 package com.rekahdo.facechat._mappers;
 
 import com.rekahdo.facechat._controllers.AppUserController;
-import com.rekahdo.facechat._dtos.AppUserDto;
+import com.rekahdo.facechat._dtos.entities.AppUserDto;
 import com.rekahdo.facechat._entities.AppUser;
 import com.rekahdo.facechat._entities.Authority;
 import com.rekahdo.facechat.enums.AuthorityRole;

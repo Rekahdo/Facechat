@@ -1,6 +1,6 @@
 package com.rekahdo.facechat.security.user;
 
-import com.rekahdo.facechat._dtos.AppUserDto;
+import com.rekahdo.facechat._dtos.entities.AppUserDto;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 

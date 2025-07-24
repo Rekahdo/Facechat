@@ -1,7 +1,6 @@
-package com.rekahdo.facechat._dtos;
+package com.rekahdo.facechat._dtos.entities;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rekahdo.facechat.enums.ChatStatus;
 import com.rekahdo.facechat.enums.ContentType;
 import jakarta.persistence.EnumType;
@@ -14,7 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor

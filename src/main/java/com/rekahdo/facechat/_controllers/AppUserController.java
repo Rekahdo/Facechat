@@ -1,8 +1,7 @@
 package com.rekahdo.facechat._controllers;
 
-import com.rekahdo.facechat._dtos.AppUserDto;
+import com.rekahdo.facechat._dtos.entities.AppUserDto;
 import com.rekahdo.facechat._dtos.paginations.AppUserPageRequestDto;
-import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._services.AppUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +30,8 @@ public class AppUserController {
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #dto) OR hasRole('ADMIN') OR hasRole('EDITOR')")
 	@PutMapping(path = "", consumes = "application/json")
-	public ResponseEntity<?> putUser(@Valid @RequestBody AppUserDto dto) {
-		return service.putUser(dto);
+	public ResponseEntity<?> editUser(@Valid @RequestBody AppUserDto dto) {
+		return service.editUser(dto);
 	}
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #dto) OR hasRole('ADMIN') OR hasRole('EDITOR')")

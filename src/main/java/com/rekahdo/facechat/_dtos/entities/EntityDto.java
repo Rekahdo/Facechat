@@ -1,4 +1,4 @@
-package com.rekahdo.facechat._dtos;
+package com.rekahdo.facechat._dtos.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
