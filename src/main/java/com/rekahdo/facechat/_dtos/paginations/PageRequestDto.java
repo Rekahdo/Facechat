@@ -1,7 +1,9 @@
 package com.rekahdo.facechat._dtos.paginations;
 
 import com.rekahdo.facechat.utilities.StringFormat;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -9,20 +11,42 @@ import org.springframework.data.domain.Sort;
 import java.util.Objects;
 
 @NoArgsConstructor
-public class PageRequestDto {
+@Getter
+@Setter
+public abstract class PageRequestDto {
 
-	private Integer page = 0;
+	protected Integer page = 0;
 
-	private Integer size = 10;
+	protected Integer size = 10;
 
-	private boolean ascend = true;
+	protected boolean ascend = true;
 
-	private String sortByField = "id";
+	public String sortByField = "id";
 
-	public PageRequestDto(Integer page, Integer size, boolean ascend, String sortByField) {
-		this.page = page;
+	protected PageRequestDto(Integer size) {
 		this.size = size;
+	}
+
+	protected PageRequestDto(boolean ascend) {
 		this.ascend = ascend;
+	}
+
+	protected PageRequestDto(String sortByField) {
+		this.sortByField = sortByField;
+	}
+
+	protected PageRequestDto(Integer size, boolean ascend) {
+		this(size);
+		this.ascend = ascend;
+	}
+
+	protected PageRequestDto(Integer size, String sortByField) {
+		this(size);
+		this.sortByField = sortByField;
+	}
+
+	protected PageRequestDto(Integer size, boolean ascend, String sortByField) {
+		this(size, ascend);
 		this.sortByField = sortByField;
 	}
 
@@ -32,38 +56,7 @@ public class PageRequestDto {
 		Sort.Direction sort = (dto.isAscend() ? Sort.Direction.ASC : Sort.Direction.DESC);
 		String sortByField = (Objects.nonNull(dto.getSortByField()) ? dto.getSortByField() : this.sortByField);
 
-        return PageRequest.of(pageNo, pageSize, sort, StringFormat.split(sortByField));
+		return PageRequest.of(pageNo, pageSize, sort, StringFormat.split(sortByField));
 	}
 
-	public Integer getPage() {
-		return page;
-	}
-
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-
-	public Integer getSize() {
-		return size;
-	}
-
-	public void setSize(Integer size) {
-		this.size = size;
-	}
-
-	public boolean isAscend() {
-		return ascend;
-	}
-
-	public void setAscend(boolean ascend) {
-		this.ascend = ascend;
-	}
-
-	public String getSortByField() {
-		return sortByField;
-	}
-
-	public void setSortByField(String sortByField) {
-		this.sortByField = sortByField;
-	}
 }

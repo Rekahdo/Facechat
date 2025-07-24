@@ -1,6 +1,7 @@
 package com.rekahdo.facechat._controllers;
 
 import com.rekahdo.facechat._dtos.FriendshipDto;
+import com.rekahdo.facechat._dtos.paginations.FriendshipPageRequestDto;
 import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._services.FriendshipService;
 import com.rekahdo.facechat.enums.FriendshipStatus;
@@ -32,7 +33,7 @@ public class FriendshipController {
 
 	@PreAuthorize("@appUserSecurity.isUserAuth(authentication, #userId) OR hasRole('ADMIN') OR hasRole('MODERATOR')")
 	@GetMapping(path = "")
-	public ResponseEntity<?> getFriendships(@PathVariable Long userId, @ModelAttribute PageRequestDto dto,
+	public ResponseEntity<?> getFriendships(@PathVariable Long userId, @ModelAttribute FriendshipPageRequestDto dto,
 			@RequestParam(defaultValue = "ACCEPTED,PENDING,BLOCKED", required = false) String status) {
 		return service.getFriendships(userId, dto, status);
 	}

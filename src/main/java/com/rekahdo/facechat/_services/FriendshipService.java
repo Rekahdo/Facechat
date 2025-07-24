@@ -3,6 +3,7 @@ package com.rekahdo.facechat._services;
 import com.rekahdo.facechat._controllers.FriendshipController;
 import com.rekahdo.facechat._dtos.AppUserDto;
 import com.rekahdo.facechat._dtos.FriendshipDto;
+import com.rekahdo.facechat._dtos.paginations.FriendshipPageRequestDto;
 import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._entities.AppUser;
 import com.rekahdo.facechat._entities.Friendship;
@@ -40,7 +41,7 @@ public class FriendshipService {
 	private AppUserRepository appUserRepository;
 
 	@Autowired
-	private PageRequestUriBuilder<FriendshipDto> pageLinkBuilder;
+	private PageRequestUriBuilder<FriendshipDto, FriendshipPageRequestDto> pageLinkBuilder;
 
 	@Autowired
 	private AppUserMapper userMapper;
@@ -109,7 +110,7 @@ public class FriendshipService {
 		return ResponseEntity.ok().build();
 	}
 
-	public ResponseEntity<?> getFriendships(Long userId, PageRequestDto dto, String status) {
+	public ResponseEntity<?> getFriendships(Long userId, FriendshipPageRequestDto dto, String status) {
 		List<FriendshipStatus> statuses = Arrays.stream(StringFormat.split(status))
 				.map(FriendshipStatus::valueOf).toList();
 		List<Friendship> friendships = repo.findByUserIdAndStatusIn(userId, statuses);

@@ -51,7 +51,7 @@ public class ChatService {
 	private ChatRepository repo;
 
 	@Autowired
-	private PageRequestUriBuilder<ChatDto> pageLinkBuilder;
+	private PageRequestUriBuilder<ChatDto, ChatPageRequestDto> pageLinkBuilder;
 
 	@Autowired
 	private FriendshipRepository friendshipRepository;

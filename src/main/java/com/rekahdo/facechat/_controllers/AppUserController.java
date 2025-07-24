@@ -1,6 +1,7 @@
 package com.rekahdo.facechat._controllers;
 
 import com.rekahdo.facechat._dtos.AppUserDto;
+import com.rekahdo.facechat._dtos.paginations.AppUserPageRequestDto;
 import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._services.AppUserService;
 import jakarta.validation.Valid;
@@ -42,7 +43,7 @@ public class AppUserController {
 
 	@PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
 	@GetMapping("")
-	public ResponseEntity<?> getUsers(@ModelAttribute PageRequestDto dto) {
+	public ResponseEntity<?> getUsers(@ModelAttribute AppUserPageRequestDto dto) {
 		return service.getUsers(dto);
 	}
 

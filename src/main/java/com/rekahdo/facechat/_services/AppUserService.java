@@ -2,6 +2,7 @@ package com.rekahdo.facechat._services;
 
 import com.rekahdo.facechat._controllers.AppUserController;
 import com.rekahdo.facechat._dtos.AppUserDto;
+import com.rekahdo.facechat._dtos.paginations.AppUserPageRequestDto;
 import com.rekahdo.facechat._dtos.paginations.PageRequestDto;
 import com.rekahdo.facechat._entities.AppUser;
 import com.rekahdo.facechat._mappers.AppUserMapper;
@@ -60,7 +61,7 @@ public class AppUserService {
 	private JwtSymmetricService jwtService;
 
 	@Autowired
-	private PageRequestUriBuilder<AppUserDto> pageLinkBuilder;
+	private PageRequestUriBuilder<AppUserDto, AppUserPageRequestDto> pageLinkBuilder;
 
 	@Autowired
 	private DBAdmin dbAdmin;
@@ -138,7 +139,7 @@ public class AppUserService {
 		return ResponseEntity.ok(AppUserMJV.privateFilter(dto));
 	}
 
-	public ResponseEntity<?> getUsers(PageRequestDto dto) {
+	public ResponseEntity<?> getUsers(AppUserPageRequestDto dto) {
 		Page<AppUser> users = repo.findAll(dto.getPageable(dto));
 		if (users.isEmpty()) throw new EmptyListException();
 
@@ -152,7 +153,7 @@ public class AppUserService {
 		AppUserDto dto = mapper.toDto(user);
 
 		if(AuthUser.IS_AN_ADMIN() || AuthUser.IS_A_MODERATOR())
-			dto.add(linkTo(methodOn(AppUserController.class).getUsers(new PageRequestDto())).withRel("users"));
+			dto.add(linkTo(methodOn(AppUserController.class).getUsers(new AppUserPageRequestDto())).withRel("users"));
 
 		return ResponseEntity.ok(AppUserMJV.privateFilter(dto));
 	}
